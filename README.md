@@ -108,8 +108,6 @@ FRONTEND_PORT=5173
 * Abstracted **embeddings** and **vector store** so providers can be swapped without UI changes.
 * Added **citation‑aware answers** to reduce hallucinations and speed up doc lookup.
 
-(Replace with concrete numbers if you have them—e.g., p50 latency, index size.)
-
 ---
 
 ## License
