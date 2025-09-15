@@ -1,0 +1,430 @@
+Release Notes - VMware*
+Intel® QuickAssist Technology
+Hardware Version 2.0
+January 2024
+Document Number: 766469-003
+Performance varies by use, conﬁguration and other factors. Learn more on the Intel's Performance
+Index site.
+Performance results are based on testing as of dates shown in conﬁgurations and may not reﬂect all
+publicly available updates. See backup for conﬁguration details. No product or component can be
+absolutely secure.
+Your costs and results may vary.
+Intel technologies may require enabled hardware, software or service activation.
+The products described may contain design defects or errors known as errata which may cause the
+product to deviate from published speciﬁcations. Current characterized errata are available on request.
+Code names are used by Intel to identify products, technologies, or services that are in development and
+not publicly available. These are not "commercial" names and not intended to function as trademarks.
+See Intel's Legal Notices and Disclaimers.
+© Intel Corporation. Intel, the Intel logo, Atom, Xeon, and other Intel marks are trademarks of Intel
+Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
+Contents
+1
+Description of Release
+1
+1.1
+Features
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2
+1.2
+Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2
+1.3
+Packages Information
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.3.1
+DirectPath I/O packages . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.3.2
+Enhanced DirectPath I/O packages
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.4
+Version Numbering Scheme . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.5
+List of Files in Release . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.6
+Supported Guest Drivers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.7
+Technical Support
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.8
+Environmental Assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.9
+Related Documentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+2
+Release Updates
+6
+2.1
+Known Issues
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.1.1
+QAT20-23616 - [Firmware] Shared Virtual Memory (SVM) and Address Transla-
+tion (AT) disabled
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.1.2
+QAT20-18924 - [MCC] MCC SKUs may consume more power than expected . . . .
+6
+2.1.3
+QAT20-20272 - [XCC/MCC] Spurious heartbeat failures may be observed on
+some SKUs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.1.4
+VQQ-2128 - Driver may leak memory if virtual device creation failed under certain
+conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.1.5
+VQQ-1907 - Virtual device power on inside Guest causing VM crash . . . . . . . . . .
+7
+2.2
+Resolved Issues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+2.2.1
+VQQ-1618 - Driver may accept incorrect service mask conﬁguration and treat it as
+default conﬁguration
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+2.2.2
+VQQ-1553 - Incompatibility between legacy 1.7 and 2.0 drivers . . . . . . . . . . . . . .
+8
+2.2.3
+VQQ-1542 - VM with enabled vIOMMU may crash with IOMMU fault . . . . . . . . . .
+8
+3
+Revision History
+9
+1 Description of Release
+This document contains information on the accompanying Intel® QuickAssist Technology (Intel® QAT)
+Hardware Version 2.0 Driver for VMware ESXi*.
+This software enables Intel® QuickAssist Technology (Intel® QAT) accelerator on VMware ESXi. Driver
+enables sharing of a Physical Function (PF) across multiple guest Virtual Machines (VM) using Single
+RootI/OVirtualization(SR-IOV)andIntel® ScalableI/OVirtualization(Intel® ScalableIOV)technologies.
+This is accomplished by exposing Intel® QAT accelerator as Virtual Functions (VFs) in case of SR-IOV
+or Assignable Device Interfaces (ADIs) as Virtual Devices (VDEVs) in case of Intel® Scalable IOV, to a
+speciﬁc guest VM(s).
+This release includes two types of driver packages, each supporting a speciﬁc mode for exposing accel-
+erator to guest VM, as listed below:
+• DirectPath I/O via SR-IOV: Later in the document referred as SR-IOV driver
+• Enhanced DirectPath I/O via Intel® Scalable IOV: This package has special version convention
+Main diﬀerence between these two driver types is what kind of QAT devices are exposed to the VM. SR-
+IOV driver exposes conventional VFs, but Enhanced DirectPath I/O driver - vQAT VDEV. Drivers have
+diﬀerent set of features and limitations, refer to Features and Limitations sections correspondingly for
+additional details.
+For instructions on loading and running the release software, refer to the README.txt ﬁle in the corre-
+sponding released softwarepackage. For instructionson installingthe driverin the GuestOperatingSys-
+tem (OS), refer to corresponding guest driver’s collaterals listed in the Related Documentation section.
+Refer to the Revision History to check the changes in this document.
+Note: Thesereleasenotesmayincludeknownissueswiththird-partyorreferenceplatformcomponents
+that aﬀect the operation of the software.
+1
+Release Notes - VMware*
+1.1 Features
+• Sym/Asym Crypto
+• TLS1.3 elliptical curves Montgomery encryption (curve 25519 and curve 448)
+• DataCompressionwithCnVforDeﬂateandLZ4/LZ4salgorithmsandCnVnRforDeﬂateandLZ4s
+• Chaining support
+• SM3/SM4
+• Asynchronous E2E support for compression
+• Telemetry
+• Power Management
+• Extended RAS (uncorrectable and fatal error support)
+• Ratelimiting (only with Direct Path I/O driver)
+• Intel® Scalable IOV (only with Enhanced DirectPath I/O driver)
+• VMware vSphere* vMotion* support (only with Enhanced DirectPath I/O driver)
+1.2 Limitations
+• Symmetric services are not conﬁgured by default. Refer to the Driver conﬁguration - Services sec-
+tion in README.txt for additional information.
+• Stateful decompression is not supported.
+• Intel® Key Protection Technology (KPT) is not currently supported.
+• Auto-select best (ASB) is not supported with rolling XXHash32.
+• Dynamic Power Management (DPM) is not currently supported.
+• Shared Virtual Memory (SVM) and Address Translation (AT) are not currently supported.
+• ESXi limitation: number of PCI passthrough devices per VM is limited. Check “ESXi/ESX Conﬁg-
+uration Maximums” KB article for exact limits. ESXi will not allow to power on VM if such limit is
+exceeded.
+• Enhanced and non-Enhanced DirectPath I/O drivers are mutually exclusive and cannot be installed
+simultaneously. Switching from one driver to another is covered in the Coexistence with Enhanced
+Direct Path I/O* driver section of the README ﬁle.
+• VM conﬁguration will be diﬀerent between Enhanced and non-Enhanced DirectPath I/O drivers,
+as well as SW stack inside VM. Switching between driver types can cause VM to fail power on, so
+re-conﬁguration will be required.
+2
+Description of Release
+Release Notes - VMware*
+• DuetoVMwarelimitations, packageforEnhancedDirectPathI/Odriveriscompatibleonlywithpar-
+ticular version of ESXi. Refer to Supported ESXi Version in package description to choose right
+package.
+1.3 Packages Information
+1.3.1 DirectPath I/O packages
+Package Name
+qat-2.0_ext_rel_bin_2.5.3.113-7.0.0-15843807.tar.gz
+Release Date
+02/05/2024
+Supported Hard-
+ware
+• 4th Generation Intel® Xeon® Scalable Processor (4xxx QAT)
+• 5th Generation Intel® Xeon® Scalable Processor (4xxx QAT)
+Supported ESXi
+Version(s)
+• 7.0 Update 3i and newer
+• 8.0 and newer
+Driver Version
+2.5.3.113
+Package Check-
+sum
+SHA256: fa6432cb82748ca0216b5089efd629e5
+a7a5d943a0999abfb0056e9fca3b3d1b
+1.3.2 Enhanced DirectPath I/O packages
+Package Name
+qat-2.0_ext_rel_bin_1002.5.3.113-8.0.2-22380479-dvx.tar.gz
+Release Date
+02/05/2024
+Supported Hard-
+ware
+• 4th Generation Intel® Xeon® Scalable Processor (4xxx QAT)
+• 5th Generation Intel® Xeon® Scalable Processor (4xxx QAT)
+Supported ESXi
+Version(s)
+• 8.0 Update 2
+Driver Version
+1002.5.3.113
+Package Check-
+sum
+SHA256: 79f3327be19d8448af3dab81a82a0728
+c352713a7f342c75d6f984aea0ea9ea0
+Description of Release
+3
+Release Notes - VMware*
+1.4 Version Numbering Scheme
+The version numbering scheme is major.minor.patch.build, where:
+• major is the major version of the software,
+• minor is the minor version of the software,
+• patch.build is the patch release and build number.
+Major version number is used as a diﬀerentiator between the two mentioned package types in the same
+release. Enhanced Direct Path I/O driver package will be designated with major version greater than
+1000. Tokeepthetwopackagetypesaligned,theassignedEnhancedDirectPathI/Odrivermajor version
+is the same major version associated with the Direct Path I/O release + 1000. Minor and patch numbers
+will match.
+1.5 List of Files in Release
+File
+Description
+qat-2.0_ext_rel_bin_2.5.3.113-7.0.
+0-15843807.tar.gz
+DirectPath I/O driver (SR-IOV)
+qat-2.0_ext_rel_bin_1002.5.3.113-8.0.
+2-22380479-dvx.tar.gz
+Enhanced DirectPath I/O driver
+Alsoeverypackageincludes LICENSE.txtand README.txtﬁleswithlicensingandbasicdriverinstallation
+and conﬁguration information correspondingly.
+1.6 Supported Guest Drivers
+The software in this release has been validated against the following guest drivers:
+• Linux*: Intel QAT driver QAT20.L.1.1.20-*
+• Windows*: Intel QAT driver QAT2.0.W.2.1.0-*
+The actual list of supported guest OS depends on the guest driver compatibility. Refer to the corre-
+sponding documentation for more information.
+4
+Description of Release
+Release Notes - VMware*
+1.7 Technical Support
+Intel oﬀers only support for this software at the Application Programming Interface (API) level, deﬁned
+in the Programmer’s Guide and API reference manuals listed in the Related Documentation section.
+For technical support, including answers to questions not addressed in this document, visit the technical
+support forum, FAQs, and other support information at Intel Support.
+VMware forwards all issues they suspect to be related to Intel QAT to Intel to help triage and resolve with
+the customer directly.
+1.8 Environmental Assumptions
+The following assumptions are made about the deployment environment:
+• The driver object/executable ﬁle on the disk should be protected using the normal ﬁle protection
+mechanisms so it is writable by only trusted users, for example, a privileged user or an administrator.
+• The public key ﬁrmware image on the disk should be protected using normal ﬁle protection mech-
+anisms, so it is writable only by trusted users; for example, a privileged user or an administrator.
+• The Intel QAT device should not be exposed to untrusted users through the user space direct de-
+ployment model.
+• TheDynamicRandom-AccessMemory(DRAM)isconsideredtobeinsidethetrustboundary. The
+traditional memory-protection schemes provided by the Intel architecture processor and memory
+controller, and by the OS, are to prevent unauthorized access to these memory regions.
+• Persistent keys were not considered, but the storage media are also considered inside the crypto-
+graphic boundary.
+• Thedriver-exposeddeviceﬁle shouldbe protectedusingthenormalﬁleprotectionmechanismsso
+that only trusted users can open, read or write it.
+1.9 Related Documentation
+Title
+Number
+Intel QuickAssist Technology for Linux* - Getting Started Guide (HW 2.0)
+632506
+Intel QuickAssist Technology for Linux* - Release Notes (HW 2.0)
+632507
+Intel QuickAssist Technology for VMware* - Release Notes (HW 2.0)
+766469
+Intel QuickAssist Technology for Windows* - Release Notes (HW 2.0)
+758459
+Intel QuickAssist Technology - Programmer’s Guide (HW 2.0)
+743912
+Intel QuickAssist Technology API Programmer’s Guide
+330684
+Intel QuickAssist Technology Cryptographic API Reference Manual
+330685
+Intel QuickAssist Technology Data Compression API Reference Manual
+330686
+Intel Device Manager for VMware vCenter Server
+773349
+Description of Release
+5
+2 Release Updates
+2.1 Known Issues
+2.1.1 QAT20-23616 - [Firmware] Shared Virtual Memory (SVM) and
+Address Translation (AT) disabled
+Title
+[Firmware] Shared Virtual Memory (SVM) and Address Translation (AT) dis-
+abled
+Reference
+QAT20-23616
+Description
+When running QAT workloads with AT enabled under loaded traﬃc conditions,
+memory page corruption may occur.
+Intel is looking at a possible workaround for the problem, and until then the QAT
+ﬁrmware/Driver will not make use of or enable SVM with AT.
+Implication
+It is not currently possible to run with SVM and AT.
+Resolution
+Current workaround is disabling SVM and AT.
+2.1.2 QAT20-18924 - [MCC] MCC SKUs may consume more power
+than expected
+Title
+[MCC] MCC SKUs may consume more power than expected
+Reference
+QAT20-18924
+Description
+Due to Power Management changes in MCC platforms one QAT device in ev-
+ery socket is permanently clock gated when not processing requests which leads
+to inevitable heartbeat failures and device resets. Current FW workaround in-
+creases power consumption by keeping QAT in active state. Intel is working on
+workaround that does not have impact on power consumption.
+Implication
+Higher power consumption is possible.
+Resolution
+There is no workaround currently available.
+6
+Release Notes - VMware*
+2.1.3 QAT20-20272 - [XCC/MCC] Spurious heartbeat failures may
+be observed on some SKUs
+Title
+[XCC/MCC] Spurious heartbeat failures may be observed on some SKUs
+Reference
+QAT20-20272
+Description
+Time tracking in FW is inaccurate due to power management causing that fre-
+quency of HW counter that is used as reference for time measurements appears
+lower than expected. This may lead to delayed heartbeat and telemetry updates
+when devices become idle. Intel is working on workaround that removes depen-
+dency on the HW counter.
+Implication
+No functional impact, these messages can be ignored.
+Resolution
+There is no workaround currently available.
+2.1.4 VQQ-2128 - Driver may leak memory if virtual device creation
+failed under certain conditions
+Title
+Driver may leak memory if virtual device creation failed under certain conditions
+Reference
+VQQ-2128
+Description
+Under certain conditions if driver fails to create virtual device for Enhanced Di-
+rectPath I/O it may leak memory.
+Implication
+It will be impossible to recover HW from fatal error as described in the README
+ﬁle, without restarting system.
+Resolution
+There is no workaround currently available.
+2.1.5 VQQ-1907 - Virtual device power on inside Guest causing VM
+crash
+Title
+Virtual device power on inside Guest causing VM crash conditions
+Reference
+VQQ-1907
+Description
+If user will toggle power for virtual PCI device oﬀand then on inside Guest OS,
+that will cause VM emergency shutdown due issues in VMware ESXi*.
+Implication
+User may lose unsaved data inside VM.
+Resolution
+Avoid toggling power for the virtual PCI device. Use latest version of VMware
+ESXi where this issue will be resolved.
+Release Updates
+7
+Release Notes - VMware*
+2.2 Resolved Issues
+2.2.1 VQQ-1618 - Driver may accept incorrect service mask conﬁgu-
+ration and treat it as default conﬁguration
+Title
+Drivermayacceptincorrectservicemaskconﬁgurationandtreatitasdefaultcon-
+ﬁguration.
+Reference
+VQQ-1618
+Description
+Service mask parsing may interpret incorrect service mask passed to driver as a
+valid mask that matches the default conﬁguration and still proceed with driver at-
+tachment.
+Implication
+User will be not notiﬁed about incorrect service mask. Also device will fall back to
+the default conﬁguration.
+Resolution
+User should conﬁgure service masks as described in the driver’s documentation.
+2.2.2 VQQ-1553-Incompatibilitybetweenlegacy1.7and2.0drivers
+Title
+Incompatibility between legacy 1.X and 2.0 drivers
+Reference
+VQQ-1553
+Description
+1.7 driver (version 1.1.0.7) couldn’t be installed on the same system with 2.0 driver.
+They are using same namespaces and will conﬂict, so one of the drivers will fail
+initialization.
+Implication
+Only one of the driver could be installed on the system.
+Resolution
+Use updated 1.X driver, starting from version 1.5.0* it’s fully compatible with driver
+for QAT 2.0.
+2.2.3 VQQ-1542 - VM with enabled vIOMMU may crash with
+IOMMU fault
+Title
+VM with enabled vIOMMU may crash with IOMMU fault
+Reference
+VQQ-1542
+Description
+QAT usecases that require vIOMMU to be enabled for the guest are currently not
+supported due issue in VMware ESXi*. Running such workload inside VM may
+causeit’stostoprespondingandreporitedinVMwareESXilogsasIOMMUpage-
+fault.
+Implication
+Workloads that require vIOMMU will crash VM.
+Resolution
+Avoid enabling vIOMMU. Use the latest version of VMware ESXi where this issue
+resolved, like 8.0 Update 2 or 7.0 Update 3p.
+8
+Release Updates
+3 Revision History
+Document
+Version
+Description
+Date
+003
+• Updates for 2.5.3 release - updated resolved and
+known issues
+• Information about Enhanced DirectPath I/O driver
+• Versioning info
+February 2024
+002
+Updates for 2.4.1 release
+October 2023
+001
+Initial Release
+January 2023
+9

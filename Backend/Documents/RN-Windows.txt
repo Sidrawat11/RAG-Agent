@@ -1,0 +1,1253 @@
+Windows Release Notes
+Intel® QuickAssist Technology
+Hardware Version 1.7/1.8
+Production Release
+June 2023
+Document Number: 337758
+CONTENTS
+1
+Release Description
+4
+1.1
+Supported Hardware Platforms
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+Supported Operating Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3
+Package Version
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.4
+What’s New
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.5
+Data Compression Services
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+1.6
+Cryptography Services . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+1.7
+Customer Support
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+1.8
+List of Files in this Release . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+1.9
+Reference Documents
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+1.10
+Terminology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2
+Limitations, Known Issues and Resolved Issues
+14
+2.1
+Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+2.2
+Known Issues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+2.2.1
+WCAT workload has ECDHE curve25519 failure . . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.2
+Cngtest does not validate fallback operations are working correctly . . . . . . . . . . . . . .
+15
+2.2.3
+Parcomp unable to read > 1GB file for compression . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.4
+Sending malicious data to the VF may result in PCIe* Push/Pull Parity Error or NMI . . . .
+16
+2.2.5
+Multiple concurrent PF/VF comms operations will put VF device in bad state . . . . . . . .
+16
+2.2.6
+Length headers are not populated for gzipext in SW Fallback on Linux* QATzip . . . . . . .
+16
+2.2.7
+Installation temp folder not deleted when QAT installed as normal user . . . . . . . . . . . .
+17
+2.2.8
+Uninstalling QAT PF driver with active QAT VF’s may cause VM shutdown issues . . . . .
+17
+2.2.9
+In SR-IOV mode, if all QAT devices fail within seconds of each other with heavy I/O, may
+lead to system instability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+17
+2.2.10
+Repeatedly disable/enable of QAT Linux* VF’s will make the Guest VF devices unresponsive 18
+2.2.11
+Repeatedly and stressfully referencing invalid memory in SR-IOV enabled Guest may lead to
+Guest instability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.2.12
+Creating hundreds of QATzip Sessions slows when constrained by Guest resources . . . . .
+18
+2.2.13
+Intel® Atom® C3000 systems occasionally returns QZ_FAIL on (de)compress or
+QZ_NOSW_NO_HW on qzSetupSession . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+2.2.14
+Xeon® D-2700 Series in non-BMSM mode only has only 4 available Acceleration Units . .
+19
+2.3
+Resolved Issues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+2.3.1
+Cannot disable driver while parcomp (compression) is running . . . . . . . . . . . . . . . .
+19
+2.3.2
+Default curve order for elliptic curves not supported by QAT . . . . . . . . . . . . . . . . .
+20
+2.3.3
+Windows Setup /passive install has crypto failures . . . . . . . . . . . . . . . . . . . . . . .
+20
+2.3.4
+QAT driver and service are sometimes not removed after uninstallation . . . . . . . . . . . .
+20
+2.3.5
+Compression may randomly fail (qzSetupSession error) after driver installation . . . . . . .
+21
+2.3.6
+Improper usage of QATzip may result in system instability . . . . . . . . . . . . . . . . . .
+21
+2.3.7
+Performance counters are not removed after uninstalling package . . . . . . . . . . . . . . .
+21
+i
+2.3.8
+Possible MIN macro redefinition error in qatzip.h header file . . . . . . . . . . . . . . . . .
+21
+2.3.9
+During a “No QAT HW” driver install, the user is informed the process is interrupted . . . .
+22
+2.3.10
+The isa-l.dll is not being installed for Windows Server Core editions . . . . . . . . . . . . .
+22
+2.3.11
+Driver upgrade with 48 VF’s may fail with at least one VF failing to successfully detach
+. .
+22
+2.3.12
+Update Readme contents to be QAT device agnostic . . . . . . . . . . . . . . . . . . . . . .
+23
+3
+Software Installation
+24
+4
+Test Applications
+25
+4.1
+Compression Test Application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+25
+4.2
+Cryptography (PKE) Test Application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+25
+ii
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Intel® QuickAssist for Windows* Release Notes
+Package Version: W.1.11.0-0006
+You may not use or facilitate the use of this document in connection with any infringement or other legal analysis
+concerning Intel products described herein. You agree to grant Intel a non-exclusive, royalty-free license to any patent
+claim thereafter drafted which includes subject matter disclosed herein.
+No license (express or implied, by estoppel or otherwise) to any intellectual property rights is granted by this document.
+Intel technologies’ features and benefits depend on system configuration and may require enabled hardware, software,
+or service activation. Performance varies depending on system configuration. No computer system can be absolutely
+secure. Check with your system manufacturer or retailer or learn more at intel.com.
+Intel technologies may require enabled hardware, specific software, or services activation. Check with your system
+manufacturer or retailer.
+The products described may contain design defects or errors known as errata which may cause the product to deviate
+from published specifications. Current characterized errata are available on request.
+Intel disclaims all express and implied warranties, including without limitation, the implied warranties of merchantabil-
+ity, fitness for a particular purpose, and non-infringement, as well as any warranty arising from course of performance,
+course of dealing, or usage in trade.
+All information provided here is subject to change without notice. Contact your Intel representative to obtain the latest
+Intel product specifications and roadmaps.
+Copies of documents which have an order number and are referenced in this document may be obtained by calling
+1-800-548- 4725 or visit www.intel.com/design/literature.htm.
+Intel and the Intel logo are trademarks of Intel Corporation in the U.S. and/or other countries.
+*Other names and brands may be claimed as the property of others.
+Copyright © 2022, Intel Corporation. All rights reserved.
+Table 1:: Revision History
+Document
+Number
+Revision
+Number
+Description
+Revision
+Date
+337758
+012
+Intel® QuickAssist Software release W.1.11.0-0006
+• Updated Section 1.2 Supported OS’s
+• Updated Section 1.4.1 What’s New
+• Updated Section 2.2 Known Issues
+June
+2023
+337758
+011
+Intel® QuickAssist Software release W.1.10.0-0005
+• Updated Section 1.2 Supported OS’s
+• Updated Section 1.4.1 What’s New
+• Updated Section 2.2 Known Issues
+March
+2023
+337758
+010
+Intel® QuickAssist Software release W.1.9.0-0008
+• Updated Section 1.2 Supported OS’s
+• Updated Section 1.4.1 What’s New
+• Updated Section 2.2 Known Issues
+• Updated Section 2.2 Resolved Issues
+October
+2022
+continues on next page
+CONTENTS
+1
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Table 1 – continued from previous page
+Document
+Number
+Revision
+Number
+Description
+Revision
+Date
+337758
+009
+Intel® QuickAssist Software release W.1.8.0-0010
+• Updated Section 1.4.1 What’s New
+• Updated Section 1.5 Data Compression Services
+• Updated Section 1.6 Cryptography Services
+June
+2022
+337758
+008
+Intel® QuickAssist Software release W.1.7.0-0009
+• Updated Section 1.2 Supported Operating Systems
+• Updated Section 1.4.1 What’s New
+• Updated Section 2.2 Known Issues
+• Updated Section 2.3 Resolved Issues
+March
+2022
+337758
+007
+Intel® QuickAssist Software release W.1.6.0-0009
+• Updated Section 1.2 Supported Operating Systems
+• Updated Table 1.
+Validated Bare-Metal/Host Operating
+Systems Supported for this Release
+• Updated Table 2. Validated Guest Operating Systems Sup-
+ported for this Release
+• Updated Section 1.4.1 What’s New
+• Updated Table 3. Intel® QAT Software Release Feature
+History
+• Updated Section 1.6 Cryptography Services
+• Updated Section 2.3 Resolved Issues
+November
+2021
+337758
+006
+Intel® QuickAssist Software release W.1.6.0-0004
+• Updated Section 1.1 Supported Platforms
+August
+2021
+337758
+005
+Intel® QuickAssist Software release 1.5.0-0007
+• Updated Section 1.2 Supported OS
+June
+2021
+337758
+004
+Intel® QuickAssist Software release 1.4.0-0007
+• Updated Section 1.2 Supported OS
+• Add support for Intel® Atom® C3000 with Intel® QAT
+March
+2021
+337758
+003
+Intel® QuickAssist Software release 1.3.0-0009
+• Added Section 1.3.1 What’s New
+• Added Section 1.3.2 Software Release History
+• Updated Section 2.2 Known Issues
+• Updated Section 2.3 Resolved Issues
+April
+2020
+337758
+002
+Intel® QuickAssist Software release v1.1.0-29
+• Removed Support for Windows* Server 2012 R2
+• Updated Section 2.2 Known Issues
+• Updated Section 1.1 Supported Platforms
+March
+2019
+continues on next page
+2
+CONTENTS
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Table 1 – continued from previous page
+Document
+Number
+Revision
+Number
+Description
+Revision
+Date
+337758
+001
+• Initial release
+June
+2018
+CONTENTS
+3
+CHAPTER
+ONE
+RELEASE DESCRIPTION
+This document contains information on the accompanying Intel® QuickAssist Technology (Intel® QAT) Windows*
+Software Release W.1.11.0-0006. This document also describes extensions and deviations from the release function-
+ality described in Reference Documents, Intel® QuickAssist Technology Software for Linux* Software Programmer’s
+Guide for the various platforms that support Intel® QAT.
+Note: These release notes may include known issues with third-party or reference platform components that affect the
+operation of the software.
+1.1 Supported Hardware Platforms
+The software in this release has been validated against the following devices:
+• Intel® QuickAssist Adapter 8960 and 8970 (C62x)
+• Intel® Xeon® Scalable Platform with Intel® C62x Chipset (with Intel® QAT)
+• Intel® Atom® C3000 series with Intel® QAT C3xxx
+• Intel® Xeon® D-2100 series Platform with Intel® C62x Chipset (with Intel® QAT)
+• Intel® Xeon® D-2700 series with Intel® QAT C4xxx
+Note: Intel® QAT supports Intel® Xeon® Scalable first, second, and third generation platforms.
+Note: The Xeon® D-2700 series with Intel® QAT C4xxx was validated using the Switch Mode SKU.
+Important:
+The only validated Intel® QuickAssist add-in cards are genuine Intel® QuickAssist Adapter 8960 and
+8970.
+4
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+1.2 Supported Operating Systems
+The software in this release has been validated against the following Operating Systems (OS):
+Table 1.1:: Validated Host Operating Systems
+Host Operating System
+Intel® QAT C62x
+Intel® QAT C3xxx
+Intel® QAT C4xxx
+Windows* Server 2016
+Yes
+No
+No
+Windows* Server 2019
+Yes
+No
+Yes
+Windows* Server 2022
+Yes
+No
+Yes
+Windows* 10 Enterprise LTSC
+No
+Yes
+No
+Below are the currently validated Guest Operating Systems supported with this driver release as a Physical Function
+(PF) driver for SR-IOV.
+Table 1.2:: Validated Guest Operating Systems
+Guest Operating System
+Intel® C62X | Virtual Function
+Intel® C4xxx | Virtual Function
+Windows* Server 2016
+Full QAT HW/SW Support
+No
+Windows* Server 2019
+Full QAT HW/SW Support
+No
+Windows* Server 2022
+Full QAT HW/SW Support
+No
+Windows* 10 Enterprise 21H2
+SW ISA-L / MS SQL Restore only
+No
+Windows* 11 Enterprise 21H2
+SW ISA-L / MS SQL Restore only
+No
+Ubuntu* 18.04 LTS, Kernel 4.15
+Full QAT HW/SW Support
+QAT HW/SW Support, No SW Failover
+Ubuntu* 20.04 LTS, Kernel 5.4
+Full QAT HW/SW Support
+QAT HW/SW Support, No SW Failover
+Note: The Linux* VF driver was validated using Intel® QAT Linux* driver package L4.22.0-00001.
+Note:
+Windows 10 and Windows 11 Enterprise has only been validated for software ISA-L support specifically for
+Microsoft* SQL software restore from QAT hardware or ISA-L software backup.
+Note: Intel® recommends updating Windows* to the latest Cumulative Update.
+Important: Other Host/Guest Operating System combinations may work but has not been validated by Intel®.
+1.3 Package Version
+The following table shows the OS-specific package versions for each platform supported in this release.
+Table 1.3:: Package Version
+Chipset or SoC
+Package Version
+SHA256 Checksum
+Top-Level Package
+QAT1.x. W.1.11.0-0006.zip
+5E7E4A686547062D0CAA6739ADEB946C
+A24071D7BCFA1C440EBF4351EC40E3C0
+1.2. Supported Operating Systems
+5
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Important: Please verify the SHA256 checksum of the driver package to prevent use of repackaged Intel® drivers.
+Note: This software release has passed the Windows* Hardware Lab Kit (HLK*) Certification and contains certified
+device drivers.
+1.4 What’s New
+• Improved IOCTL security for the base driver, compression, and/or crypto services.
+• Added support for QAT1.8 (QatGen 3) devices for SR-IOV virtualization using Linux Guests.
+Table 1.4:: Intel® Software Release Feature History
+Release History
+New Features
+Release
+W.1.10.0-0005
+• Improved IOCTL security for the base driver, compression, and/or crypto services.
+• Added support for QAT1.8 (QatGen 3) devices in bare-metal compression only con-
+figuration.
+• Updated to new generation of QATzip API to be in line with QatGen 4.
+Release
+W.1.9.0-0008
+• Improved IOCTL security for the base driver, compression, and/or crypto services.
+• Changed QAT driver package software only installation to display warning graphic
+instead of an error graphic.
+Release
+W.1.8.0-0010
+• Updated QAT installer to install Intel® ISA-L regardless of whether nuget.exe is
+present.
+• Added QATzip API version querying.
+• Added QATzip API ability to force software even if QAT hardware is present.
+• Improved WPP trace categorization.
+• Removal of QAT hardware support for legacy and/or deprecated cryptographical al-
+gorithms. This includes but may not be limited to: DH, DSA, RSA Key Lengths
+under 2048 bit, and non-NIST ECC-Curves under 256-bit length (with the exclusion
+of curve25519).
+Release
+W.1.7.0-0009
+• Added Windows* SR-IOV Compression Software Fallback and Servicing support.
+• Added support for Windows* Server 2016, 2022 in the Guest.
+• Added a QAT installation summary of the QAT components that have been installed.
+For QAT components that have not been installed, a reason is given why.
+• Added Event Log in the event of a QAT hardware issue.
+• Added scalable multi-session and multi-threaded functionality to Windows*
+QATzip.
+continues on next page
+6
+Chapter 1. Release Description
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Table 1.4 – continued from previous page
+Release History
+New Features
+Release
+W.1.6.0-0009
+• This release is intended to replace Intel® QAT Windows* driver W.1.6.0-0004. This
+release adds Intel® ISA-L installation in addition to qatzip.dll in the installation case
+where Intel® QAT hardware is not present on the system or virtual machine. Previ-
+ously, Intel® ISA-L would only install if the Intel® QAT hardware was present.
+• Added uninstall option in the case of installing the Intel® QAT Windows* driver
+package without Intel® QAT hardware.
+Release
+W.1.6.0-0004
+• Added Windows* Virtual Function support for Windows* Server 2019 for Intel®
+QAT 8970/C62x devices
+• Added Intel® ISA-L as part of the Windows* QAT driver package. This is available
+in Standalone Mode
+• Added support for qzCompressExt and qzDecompressExt. This allows the end user
+access to extended return codes (e.g., to determine if SW or HW was used during the
+compress/decompress call)
+• Added support to install QAT software (qatzip.dll) on systems without QAT hard-
+ware
+• Removed support for Kernel Mode PKE
+Release
+W.1.5.0-0007
+• Added Windows* Host Virtualization support via SR-IOV. Currently, only Linux*
+QAT VFs are supported
+• Added installation modes. Standalone is the same as previous drivers; it will install
+the QAT base driver, compression, and crypto service. Hyper-V mode will only
+install the QAT base driver in SR-IOV mode. This requires a system reboot. Do not
+use Hyper-V mode if compression or crypto services are needed on the Host partition
+• Added Software Fallback for the Windows* PF driver to support Linux* Guests with
+the QAT Linux* VF using QAT Engine Applications
+• Added QATzip support for the systems without QAT hardware and services. All
+deflate compression operations will take the software path using ISA-L if software
+fallback is specified
+Release
+W.1.4.0-0007
+• Added support for Intel® Atom® C3000 with Intel® QAT
+• Updated Windows* QATzip to use standard QATzip header file
+• Added support for the gzip and gzipext data format
+• Added support of ISA-L SW Fallback for gzip and gzipext data formats
+Release
+W.1.3.0-0009
+• Software fallback in the event of hardware failure for cryptography and compression
+services
+• Improved error handling with the Intel® QuickAssist cryptography and compression
+services
+continues on next page
+1.4. What’s New
+7
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+Table 1.4 – continued from previous page
+Release History
+New Features
+Release
+W.1.2.0-0018
+• Intel® Intelligent Storage Acceleration Library (ISA-L) integration with Intel®
+QuickAssist compression and decompression services.
+• Compression fallback support with ISA-L
+• Improved error handling with the Intel® QuickAssist compression services
+Release
+W.1.1.0-0029
+• Add support for PKE cryptography services
+Release
+W.1.0.0-0022
+• Initial release that supports Intel® QAT compression and decompression
+1.5 Data Compression Services
+This software package provides the following Data Compression services:
+• Static Deflate Stateless compression/decompression
+• Dynamic Deflate Stateless compression/decompression
+• Includes sample code application for compression services - parcomp
+For ISA-L integration, the source code and information to build the DLL can be found in Table 6, Intel® Intelligent
+Storage Application Library GitHub. However, Intel recommends only using the ISA-L DLL included in the Windows
+QAT driver package.
+The QATZip file includes the following compression/decompression functions:
+• qzClose
+• qzCompress
+• qzCompressCrc64
+• qzCompressCrc64Ext
+• qzCompressExt
+• qzDecompress
+• qzDecompressCrc64
+• qzDecompressCrc64Ext
+• qzDecompressExt
+• qzFree
+• qzGetDefaults
+• qzGetSessionCrc64Config
+• qzGetSoftwareComponentCount
+• qzGetSoftwareComponentVersionList
+8
+Chapter 1. Release Description
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+• qzGetStatus
+• qzInit
+• qzMalloc
+• qzMaxCompressedLength
+• qzSetDefault
+• qzSetSessionCrc64Config
+• qzSetupSession
+• qzTeardownSession
+Note: Some QATzip API calls may not work due to QAT hardware limitations.
+1.6 Cryptography Services
+This software package also provides the following cryptography services.
+Support for PKE cryptography services include:
+• Cryptography API: Next-Generation (CNG) support, sometimes referred to as the “BCrypt API.” Refer to Cryp-
+tography API: Next-Generation, see Reference Documents.
+• An Intel® QuickAssist CNG provider is registered to support the following PKE algorithms:
+– Rivest-Shamir-Adleman (RSA) with key lengths (2048, 3072, 4096 bit)
+– Elliptic Curve Digital Signature Algorithm (ECDSA) (nistP256/P384/P521)
+– Elliptic-curve Diffie-Hellman ECDH (nistP256/P384/P521 and Curve25519)
+• CNG API support in user mode
+1.7 Customer Support
+Intel® offers support for this software at the Application Program Interface (API) level, defined in Reference Docu-
+ments. If the field representative has created an account for you, submit support requests via the Online Service Center,
+https://supporttickets.intel.com/?lang=en-US.
+1.8 List of Files in this Release
+The Bill of Materials (BOM) is included as a text file in the released software package. This text file is labeled “filelist”
+and located at the top directory level for each release package.
+1.6. Cryptography Services
+9
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+1.9 Reference Documents
+Async Mode for Nginx
+GZIP File Format Specifications RFC1952
+Intel® Intelligent Storage Acceleration Library
+Intel® QuickAssist Technology API Programmer’s Guide
+Intel® QuickAssist Technology OpenSSL* Engine
+Intel® QuickAssist Technology QATzip
+Intel® QuickAssist Technology Software for Linux* Drivers (Hardware Version 1.7)
+Intel® QuickAssist Technology Software for Linux* Getting Started Guide (Hardware Version 1.7)
+Intel® QuickAssist Technology Software for Linux* Release Notes (Hardware Version 1.7)
+Intel® QuickAssist Technology Software for Windows* - Technical Guide
+Microsoft* Cryptography API Next Generation
+Microsoft* DevCon GitHub
+Microsoft* PowerShell GitHub
+OpenSSL Cryptography and SSL/TLS Toolkit
+1.10 Terminology
+ADF
+Acceleration Driver Framework.
+AEAD
+Authenticated Encryption With Associated Data.
+AES
+Advanced Encryption Standard.
+API
+Application Programming Interface.
+ASIC
+Application Specific Integrated Circuit.
+BDF
+Bus Device Function.
+BIOS
+Basic Input/Output System.
+BOM
+Bill of Materials.
+BSD
+Berkeley Software Distribution.
+CBC
+Cipher Block Chaining mode.
+10
+Chapter 1. Release Description
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+CCM
+Counter with CBC-MAC mode.
+CLI
+Command Line Interface.
+CnV
+Compress and Verify.
+CnVnR
+Compress and Verify and Recover.
+C-States
+C-States are advanced CPU current lowering technologies.
+CY
+Cryptography.
+DC
+Data Compression.
+DID
+Device ID.
+DMA
+Direct Memory Access.
+DRAM
+Dynamic Random Access Memory.
+DSA
+Digital Signature Algorithm.
+DTLS
+Datagram Transport Layer Security.
+ECC
+Elliptic Curve Cryptography.
+ECDH
+Elliptic Curve Diffie-Hellman.
+FLR
+Function Level Reset.
+FW
+Firmware.
+GCM
+Galois/Counter Mode.
+GPL
+General Public License.
+GUI
+Graphical User Interface.
+HMAC
+Hash-based Message Authentication Mode.
+IA
+Intel® Architecture.
+1.10. Terminology
+11
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+IEEE
+Institute of Electrical and Electronics Engineers.
+IKE
+Internet Key Exchange.
+Intel® ISA-L
+Intel® Intelligent Storage Acceleration Library. This includes an optimized library for fast software Deflate
+compression and decmopression.
+Intel® QAT
+Intel® QuickAssist Technology.
+Intel® SpeedStep® Technology
+Advanced means of enabling very high performance while also meeting the power-conservation needs of mobile
+systems.
+Intel® VT
+Intel® Virtualization Technology.
+IOCTL
+Input Output Control function.
+IOMMU
+Input-Output Memory Management Unit.
+LAC
+LookAside Crypto.
+Latency
+The time between the submission of an operation via the QuickAssist API and the completion of that operation.
+MSI
+Message Signaled Interrupts.
+NUMA
+Non-uniform Memory Access.
+Offload Cost
+This refers to the cost, in CPU cycles, of driving the hardware accelerator. This cost includes the cost of submit-
+ting an operation via the Intel® QuickAssist API and the cost of processing responses from the hardware.
+OS
+Operating System.
+PCH
+Platform Controller Hub. In this manual, a Platform Controller Hub device includes standard interfaces and
+Intel® QAT Endpoint and I/O interfaces.
+PCI
+Peripheral Component Interconnect.
+PF
+Physical Function.
+PKE
+Public Key Encryption.
+PowerShell
+Cross-platform command-line shell and scripting language using the .NET Common Runtime.
+RAS
+Reliability, Availability, Serviceability.
+12
+Chapter 1. Release Description
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+RSA
+Rivest-Shamir-Adleman.
+SAL
+Service Access Layer.
+SGL
+Scatter-Gather List.
+SHA
+Secure Hash Algorithm.
+sIOV
+Intel® Scalable I/O Virtualization
+SoC
+System-on-a-Chip.
+SR-IOV
+Single-Root Input/Output Virtualization.
+SSL
+Secure Sockets Layer.
+SYM
+Symmetric Crypto.
+TCG
+Trusted Computing Group.
+Throughput
+The accelerator throughput usually expressed in terms of either requests per second or bytes per second.
+TLS
+Transport Layer Security.
+TPM
+Trusted Platform Module.
+UDP
+User Datagram Protocol.
+USDM
+User Space DMA-able Memory.
+VF
+Virtual Function.
+VHD
+Virtual Hard Disk, VHD(x) is the successor file format.
+VM
+Virtual Machine.
+WDK
+Windows* Driver Kit
+WPP
+Windows* Software Trace Pre-processor
+1.10. Terminology
+13
+CHAPTER
+TWO
+LIMITATIONS, KNOWN ISSUES AND RESOLVED ISSUES
+This section provides all known limitations and known issues for this Windows* software release. For detailed infor-
+mation on features/limitations, please refer to the README.txt file inside the software package.
+2.1 Limitations
+This release does not support the following:
+• QatGen3 device for cryptographical workloads in bare-metal.
+• QatGen3 device for SR-IOV mode using Windows Guests.
+• QatGen3 device for SR-IOV failover and servicing.
+• Static Deflate Stateful compression/decompression
+• Dynamic Deflate Stateful compression/decompression
+• Symmetric (bulk) cryptography algorithms like Advanced Encryption Standard (AES)
+• Fallback for Cryptography services
+2.2 Known Issues
+The known issues with this software release are listed below.
+Note: This list may not be exhaustive.
+14
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.2.1 WCAT workload has ECDHE curve25519 failure
+Title
+WCAT workload has ECDHE curve25519 failure
+Reference
+QATE-38965
+Description
+The ECDHE curve “curve25519” is the default curve for ECDHE in
+Windows*. The WCAT workload on IIS fails to authenticate when using Intel® QAT to
+run ECDHE and RSA, using the default curve preference order.
+Resolution
+Two possible resolutions:
+Change the default ECDH curve in Windows* to be a curve that is supported by Intel®
+QAT. The result is that ECDH is executed on Intel® QAT (but not using curve25519).
+Use the CPMCNGInstaller tool to unregister ECDH provider for QAT. The result is that
+ECDH is executed on the CPU using the default curve25519.
+Affected OS
+Windows* Server 2019/2016
+Driver/Module
+QAT IA - Crypto
+2.2.2 Cngtest does not validate fallback operations are working correctly
+Title
+Cngtest does not validate fallback operations are working correctly
+Reference
+QATE-38968
+Description
+Currently, Cngtest does not include tests to validate the fallback to the Microsoft* provider
+works for unsupported algorithms and curves.
+Environment: Supermicro* X11 Intel® QAT Micro-server with 2x 37C8 devices Win-
+dows* Server 2016
+Cngtest cannot validate fallback operations. If encryption is performed by SW, it needs to
+ensure that decryption can be performed by the Intel® QAT HW or vice-versa.
+Resolution
+There is currently no workaround for this, and it may be added in a future release.
+Affected OS
+Windows* Server 2019/2016
+Driver/Module
+QAT IA - Crypto
+2.2.3 Parcomp unable to read > 1GB file for compression
+Title
+Parcomp unable to read > 1GB file for compression
+Reference
+QATE-40170
+Description
+Parcomp is unable to read large files (test file was 2.2 GB) for compression. Thus, com-
+pression would fail.
+Resolution
+When writing an application with QATZIP, chunk the file into at most 1GB increments.
+Affected OS
+Windows* Server 2019/2016
+Driver/Module
+QAT IA - Compression
+2.2. Known Issues
+15
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.2.4 Sending malicious data to the VF may result in PCIe* Push/Pull Parity Error or
+NMI
+Title
+Sending malicious data to the VF may result in PCIe* Push/Pull Parity Error or NMI
+Reference
+QATE-41844
+Description
+When sending malicious or malformed data to the QAT VF driver, especially in kernel
+mode operations, you may see a PCIe* Push/Pull Parity error or in the worst and rare case,
+a NMI error.
+Resolution
+There is currently no workaround for this, it is a hardware limitation.
+Affected OS
+Windows* Server 2019 Hyper-V and newer
+Driver/Module
+QAT IA - Base Driver
+2.2.5 Multiple concurrent PF/VF comms operations will put VF device in bad state
+Title
+Multiple concurrent PF/VF comms operations will put VF device in bad state
+Reference
+QATE-67282
+Description
+Operations that require multiple concurrent PF/VF communications may result in putting
+the VF in a bad state. Such operations generally include bring the VF up or down simul-
+taneously (such as during a precisely timed driver installation across multiple VM’s and
+VF’s).
+Resolution
+Restart the affected VM
+Affected OS
+Windows* Server 2019 Hyper-V and newer Linux* using KVM on kernel 4.04 and newer
+Driver/Module
+QAT IA - Base Driver
+2.2.6 Length headers are not populated for gzipext in SW Fallback on Linux* QATzip
+Title
+Length headers are not populated for gzipext in SW Fallback on Linux* QATzip
+Reference
+QATE-74339
+Description
+When using gzipext on Linux* QATzip version 1.0.x in software fallback mode, the gzipext
+header will not populate the length field.
+This may result in Windows* QATzip not being able to decompress this using gzipext
+(qatgzipext in parcomp sample application).
+Resolution
+Use gzip decompression (qatgzip for parcomp).
+Affected OS
+Windows* Server 2016/2019/2022 Linux* using QATzip up to 1.1.1
+Driver/Module
+QAT IA - Compression
+16
+Chapter 2. Limitations, Known Issues and Resolved Issues
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.2.7 Installation temp folder not deleted when QAT installed as normal user
+Title
+Installation temp folder not deleted when QAT installed as normal user
+Reference
+QATE-76914
+Description
+When QAT is installed as a normal user, the installation temporary folder is not deleted
+after install is finished or cancelled.
+Resolution
+The Windows* QAT driver package requires Administrator privileges to install correctly.
+Folder may be manually removed.
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Installer
+2.2.8 Uninstalling QAT PF driver with active QAT VF’s may cause VM shutdown is-
+sues
+Title
+Uninstalling QAT PF driver with active QAT VF’s may cause VM shutdown issues
+Reference
+QATE-76930
+Description
+When uninstalling the QAT PF driver while there are active QAT VF’s on Windows* Guests
+(Windows* Server 2019 and earlier), it may lead to instability when restarting or shutting
+down those Guests.
+Resolution
+This may be an OS limitation, as the same situation does not happen on Windows* Server
+2022.
+The
+workaround
+for
+older
+OS’s
+is
+to
+remove
+the
+QAT
+VF’s
+(via
+Remove-
+VMAssignableDevice) first before attempting to uninstall the QAT PF driver.
+Affected OS
+Windows* Server 2019 with Hyper-V running supported Windows* guests
+Driver/Module
+QAT IA - Base Driver
+2.2.9 In SR-IOV mode, if all QAT devices fail within seconds of each other with heavy
+I/O, may lead to system instability
+Title
+In SR-IOV mode, if all QAT devices fail within seconds of each other, with heavy
+I/O may lead to system instability
+Reference
+QATE-80480
+Description
+When all (on platforms with three or more Intel® QAT devices) fail within seconds of each
+other while performing large amounts of I/O stress (> 40 Gbps), there is a chance of system
+instability that may lead to a system crash.
+Resolution
+Restart the affected host system. If problem persists, contact your vendor in replacing the
+Intel® QAT adapter.
+Affected OS
+Windows* Server 2019/2022 with Hyper-V running supported Windows* guests
+Driver/Module
+QAT IA - Base Driver
+2.2. Known Issues
+17
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.2.10 Repeatedly disable/enable of QAT Linux* VF’s will make the Guest VF devices
+unresponsive
+Title
+Repeatedly disable/enable of QAT Linux* VF’s will make the Guest VF devices
+unresponsive
+Reference
+QATE-81066
+Description
+When repeatedly disabling and enabling the QAT Linux* VF in a 1VM/48VF Guest con-
+figuration, the QAT Linux* VF’s may become unresponsive.
+Resolution
+Reboot the Linux* Guest.
+Affected OS
+Windows* Server 2019 with Hyper-V running supported Linux* guests
+Driver/Module
+QAT IA - Base Driver
+2.2.11 Repeatedly and stressfully referencing invalid memory in SR-IOV enabled
+Guest may lead to Guest instability
+Title
+Repeatedly referencing invalid memory in SR-IOV enabled Guest may lead to
+Guest instability
+Reference
+QATE-81175
+Description
+When repeatedly referencing invalid memory in a stressful manner for hours in a guest with
+Intel® QAT VF’s, it may lead to system instability and a guest OS crash.
+Resolution
+Updating the Hyper-V host and Windows* guest to the latest cumulative updates greatly
+reduces the risk of this happening to negligible levels.
+Affected OS
+Windows* Server 2019/2022 with Hyper-V running supported Windows* guests
+Driver/Module
+QAT IA - Compression
+2.2.12 Creating hundreds of QATzip Sessions slows when constrained by Guest
+resources
+Title
+Creating hundreds of QATzip Sessions slows when constrained by Guest re-
+sources
+Reference
+QATE-82511
+Description
+When attempting to create hundreds QATzip Sessions inside a Windows Guest may result
+in slow downs.
+This may be caused by insufficient Guest memory.
+Resolution
+When creating QATzip applications with multiple QATzip Sessions, consider the system
+resources available.
+Affected OS
+Windows* Server 2019/2022 with Hyper-V running supported Windows* guests
+Driver/Module
+QAT IA-Compression
+18
+Chapter 2. Limitations, Known Issues and Resolved Issues
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.2.13 Intel® Atom® C3000 systems occasionally returns QZ_FAIL on (de)compress
+or QZ_NOSW_NO_HW on qzSetupSession
+Title
+Intel® Atom® C3000 systems occasionally returns QZ_FAIL on(de)compress or
+QZ_NOSW_NO_HW on qzSetupSession
+Reference
+QATE-88631
+Description
+When running continuous QATzip qzSetupSession and/or compress/decompress opera-
+tions, user may occasionally (observed in approximately 1 in 1000), the operation may
+return QZ_FAIL or QZ_NOSW_NO_HW.
+Resolution
+Add retry mechanism for the QATzip operation.
+Affected OS
+Windows* 10 Enterprise LTSC
+Driver/Module
+QAT IA-Compression
+2.2.14 Xeon® D-2700 Series in non-BMSM mode only has only 4 available Acceler-
+ation Units
+Title
+Xeon® D-2700 Series in non-Switch mode only has 4 available Acceleration Units
+Reference
+QATE-92923
+Description
+When utilizing the Xeon® D-2700 Series in non-Switch Mode (otherwise known as NIC
+Mode), only 4 of the QAT Acceleration Units are available. This may cause lower than
+expected performance.
+Resolution
+None
+Affected OS
+Windows* Server 2019 and 2022
+Driver/Module
+QAT IA - Base Driver
+2.3 Resolved Issues
+The following is a list of resolved issues up to this software release.
+Note: This list may not include any undisclosed issues.
+2.3.1 Cannot disable driver while parcomp (compression) is running
+Title
+Cannot disable driver while parcomp (compression) is running
+Reference
+QATE-36847
+Description
+When running parcomp stress tests, you cannot disable all QAT devices. Doing so may
+cause the driver to to spin until the parcomp process is stopped. The issue has been observed
+mostly on Skylake-D systems.
+Resolution
+Disable QAT devices only after the compression operations have completed.
+Affected OS
+Windows* Server 2016/2019
+Driver/Module
+QAT IA - Compression
+2.3. Resolved Issues
+19
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.3.2 Default curve order for elliptic curves not supported by QAT
+Title
+Default curve order for elliptic curves not supported by QAT
+Reference
+QATE-37219
+Description
+The default curve order on Windows when using cipher suites with ECDHE is as follows:
+curve25519 NistP256 NistP384 Since curve25519 is not supported by Intel® QAT, cryp-
+tography operations will fail when using cipher suites with ECDHE.
+Resolution
+Modify the default ECC Curve Order as below: 1. Launch the Group Policy Editor:
+gpedit.msc 2. Open Computer Configuration/Administrative Template/Network/ SSL Con-
+figuration Settings 3. Double-click ECC Curve Order (in the right pane). 4. Click Enabled.
+5. Edit the ECC Curve Order without Curve25519. 6. Click ‘Apply’ and exit the applica-
+tion.
+Affected OS
+Windows* Server 2016/2019
+Driver/Module
+QAT IA - Crypto
+2.3.3 Windows Setup /passive install has crypto failures
+Title
+Windows Setup /passive install has crypto failures
+Reference
+QATE-38404
+Description
+When you use the ‘/passive’ option for installation, it seems that Crypto will fail after a few
+iterations.
+Resolution
+Please use normal GUI installation or when installing using ‘/passive, use the /qn’ option.
+Affected OS
+Windows* Server 2016
+Driver/Module
+QAT IA - Installer
+2.3.4 QAT driver and service are sometimes not removed after uninstallation
+Title
+QAT driver and service are sometimes not removed after uninstallation
+Reference
+QATE-65388
+Description
+After uninstalling the QAT driver using control panel or the command line, the driver file
+icp_qat.sys and the associated Windows service do not get removed properly. Upon reboot,
+devices in Device Manager will show error code 32.
+Resolution
+In device manager, right click and uninstall with remove files checked, manually remove
+icp_qat.sys file.
+Affected OS
+Windows* Server 2019
+Driver/Module
+QAT IA - Installer
+20
+Chapter 2. Limitations, Known Issues and Resolved Issues
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.3.5 Compression may randomly fail (qzSetupSession error) after driver installa-
+tion
+Title
+Compression may randomly fail (qzSetupSession error) after driver installation
+uninstallation
+Reference
+QATE-71057
+Description
+After a driver installation, there may be a rare occurrence where compression operations
+will fail qzSetupSession continuously.
+Resolution
+Restart the system.
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Compression
+2.3.6 Improper usage of QATzip may result in system instability
+Title
+Improper usage of QATzip may result in system instability
+Reference
+QATE-71816
+Description
+Calling QATzip API function QzCompress directly without properly setting up a session
+via qzSetupSession, and then calling either QzClose or QzTeardownSession can cause a
+system crash.
+Resolution
+Ensure a session is properly created via QATzip API function qzSetupSession before at-
+tempting to perform compression operations.
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Compression
+2.3.7 Performance counters are not removed after uninstalling package
+Title
+Performance counters are not removed after uninstalling package
+Reference
+QATE-76357
+Description
+QAT performance counters are not being uninstalled on certain versions of Windows*.
+Resolution
+Counters can be manually removed.
+Affected OS
+Windows* Server 2016/2019
+Driver/Module
+QAT IA - Base Driver
+2.3.8 Possible MIN macro redefinition error in qatzip.h header file
+Title
+Possible MIN macro redefinition error in qatzip.h header file
+Reference
+QATE-77024
+Description
+The qatzip.h header file defines the macro - MIN as: $define MIN(a,b) (((a)<(b))?(a):(b))
+Since this is a very common macro definition, it is likely to be defined in many system
+headers and as a result, can lead to “macro re-definition” errors.
+Resolution
+Change the macro name or include an #ifndef around the macro.
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Compression
+2.3. Resolved Issues
+21
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.3.9 During a “No QAT HW” driver install, the user is informed the process is in-
+terrupted
+Title
+During a “No QAT HW” driver install, the user is informed the process is interrupted
+Reference
+QATE-79074
+Description
+When finishing a QAT driver package install with no QAT HW, the user is informed that
+the last information box informs that the install process was interrupted and no changes to
+system was made.
+In reality, qatzip.dll was successfully installed in system32.
+Resolution
+The tooltip was inaccurate, the installation of qatzip.dll was successful.
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Compression
+2.3.10 The isa-l.dll is not being installed for Windows Server Core editions
+Title
+The isa-l.dll is not being installed for Windows Server Core editions.
+Reference
+QATE-84471
+Description
+When installing the Windows QAT driver package on Windows Server Core editions, the
+isa-l.dll is not installed. The QAT installation summary erroneously attributes this to the
+lack of the NuGet binary.
+Resolution
+User can manually unpack and copy the isa-l.dll into the Windows system32 directory.
+Affected OS
+Windows* Server 2016/2019/2022 Core Edition
+Driver/Module
+QAT IA - Installer
+2.3.11 Driver upgrade with 48 VF’s may fail with at least one VF failing to success-
+fully detach
+Title
+Driver upgrade with 48 VF’s may fail with at least one VF failing to successfully
+detach
+Reference
+QATE-90525
+Description
+When attempting to upgrade the Windows QAT PF driver while running a stressful Async-
+Nginx workload with QAT-Engine in a Linux Guest with QAT 48x VF’s attached, user
+may observe that one or more VF’s cannot be detached with following error message:
+Device is still in use, can’t be stopped.
+Resolution
+Temporarily halt Async-Nginx traffic to perform the Windows PF driver ugprade.
+Affected OS
+Windows* Server 2022 with Hyper-V running supported Linux* guests
+Driver/Module
+QAT IA - Base Driver
+22
+Chapter 2. Limitations, Known Issues and Resolved Issues
+Windows QAT HW v1.7/1.8, Release QAT.W.1.11.0
+2.3.12 Update Readme contents to be QAT device agnostic
+Title
+Update Readme contents to be QAT device agnostic
+Reference
+QATE-91828
+Description
+The Readme documentation was not QAT device agnostic. Some references were specific
+to the C62x device.
+Resolution
+None
+Affected OS
+Windows* Server 2016/2019/2022
+Driver/Module
+QAT IA - Installer
+2.3. Resolved Issues
+23
+CHAPTER
+THREE
+SOFTWARE INSTALLATION
+The release package includes the Setup.exe installation application. Use this application to install the package on the
+targeted OS. For more information on how to install the package, refer to the Readme file included in the package:
+.\quickassist\README.txt
+Upon completion of the installation, the README text file can also be found in the following folder:
+<Program Files>\Intel\Intel(R) QuickAssist Technology
+Note:
+For those customers that have installed the previous version of the Intel® QAT software package, uninstall it
+and reboot before installing this new production package.
+To ensure software installation completed successfully and that Intel® QAT devices are functional, refer to Figure 3.1:.
+The screenshot lists three “Intel® C62x Accelerator” devices under the “Security accelerators” PNP Classification.
+Figure 3.1:: Device Manager with Intel® QuickAssist Driver Installed in Microsoft* Windows*
+24
+CHAPTER
+FOUR
+TEST APPLICATIONS
+4.1 Compression Test Application
+A compression test application, parcomp, is included in this package. For more information on how to use the parcomp
+application, refer to the Readme file included in the package. You can find the README file in the following folder
+upon completion of the installation:
+<Program Files>\Intel\Intel(R) QuickAssist Technology
+4.2 Cryptography (PKE) Test Application
+A cryptography test application for PKE operations, Cngtest, is included in this package. For more information on how
+to use the Cngtest application, please refer to the Readme file included in the package. You can find the README file
+in the following folder upon completion of the installation:
+<Program Files>\Intel\Intel(R) QuickAssist Technology
+25

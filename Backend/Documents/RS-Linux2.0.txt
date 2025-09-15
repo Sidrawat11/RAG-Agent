@@ -1,0 +1,1187 @@
+Release Notes - Linux*
+Intel® QuickAssist Technology
+Hardware Version 2.0
+March 2024
+Document Number: 632507-016
+Performance varies by use, configuration and other factors. Learn more on the Intel's Performance
+Index site.
+Performance results are based on testing as of dates shown in configurations and may not reflect all
+publicly available updates. See backup for configuration details. No product or component can be
+absolutely secure.
+Your costs and results may vary.
+Intel technologies may require enabled hardware, software or service activation.
+The products described may contain design defects or errors known as errata which may cause the
+product to deviate from published specifications. Current characterized errata are available on request.
+Code names are used by Intel to identify products, technologies, or services that are in development and
+not publicly available. These are not "commercial" names and not intended to function as trademarks.
+See Intel's Legal Notices and Disclaimers.
+© Intel Corporation. Intel, the Intel logo, Atom, Xeon, and other Intel marks are trademarks of Intel
+Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
+Contents
+1
+Description of Release
+1
+1.1
+Features
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+1.2
+Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2
+1.3
+Supported Operating Systems and Platforms
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2
+1.3.1
+Version Numbering Scheme . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2
+1.3.2
+Package Version . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.3.3
+Licensing for Linux* Acceleration Software . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.3.4
+SHA256 Checksum Information . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.4
+List of Files in Release . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.5
+Intel QAT API Updates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.6
+Technical Support
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.7
+Environmental Assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.8
+Related Documentation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+2
+Release Updates
+6
+2.1
+Known Issues
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.1.1
+QATE20-8981 [Sample Code] sym_dp_update_sample Functional Sample Code
+application execution will fail . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.1.2
+QATE20-9131 [DC] - Incorrect XXHASH32 can be generated when using error in-
+jection and buffer overflow occurs when using accumulated XXHASH32 . . . . . . .
+7
+2.1.3
+QATE20-9671 [DC] - Accumulated XXHash32 is not supported for LZ4 decom-
+press operations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.1.4
+QATE20-19310 [DC] Additional configuration required to enable 8K data decom-
+pression performance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+2.1.5
+QAT20-21905 SVM/AT cannot be enabled when PRS is disabled . . . . . . . . . . . .
+8
+2.1.6
+QATE20-21751 [VIRT] - Missing VFs on host when attaching to VMs . . . . . . . . . .
+9
+2.1.7
+QATE20-22999 [Sample Code] Functional sample applications will fail if service is
+not enabled on first QAT Endpoint . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+2.1.8
+QAT20-18924 [MCC] MCC SKUs may consume more power than expected . . . . .
+10
+2.1.9
+QAT20-20272 [XCC/MCC] Spurious heartbeat failures may be observed on some
+SKUs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.1.10
+QAT20-24970 [Firmware] Potential false positive heartbeat failures . . . . . . . . . .
+11
+2.1.11
+QAT20-23946 [SVM/IOMMU] Request issue doesn’t appear in response . . . . . .
+11
+2.1.12
+QAT20-28723 [SVM/IOMMU] Incorrect reporting slice timeout due to page re-
+quest latency . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+2.1.13
+QAT20-30635 [VIRT] PF/VF communication fails after attaching VF to guest and
+rebooting guest OS; performance may also suffer
+. . . . . . . . . . . . . . . . . . . . .
+12
+2.2
+Resolved Issues . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+2.2.1
+QATE20-3331[SampleCode]FunctionalSampleCodeCompressionapplications
+execution will fail . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+2.2.2
+QATE20-9755[SRIOV]RLT_ERRLOGmaybereportedunderhighconcurrentloads 14
+2.2.3
+QATE20-9669[DC]-DeflateDynamicDecompressionnotoptimizedforpayloads
+of source length < 4K, destination length <= 16K . . . . . . . . . . . . . . . . . . . . . . .
+14
+2.2.4
+QATE20-9394[SRIOV]VirtualFunctions(VFs)arenotautomaticallydetachedby
+hypervisor after Physical Function (PF) restart
+. . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.5
+QATE20-3860 [SR-IOV] Virtual Functions (VFs) require restart after changing
+Physical Function (PF) Service configuration
+. . . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.6
+QATE20-10981 [DC] EOLB incorrectly set during stateful decompression . . . . . .
+16
+2.2.7
+QAT20-10966 DC - Invalid checksum value returned with multi-Gzip payload
+. . . .
+16
+2.2.8
+QATE20-9756 [DC] - autoSelectBestHuffmanTree flag parameter is not honored
+by acceleration library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+17
+2.2.9
+QATE20-11081 [DC] - API cpaDcResetSession() does not reset E2E internal struc-
+ture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+17
+2.2.10 QATE20-9501 [DC] - Overflow can occur when using output buffer sizes defined
+by the cpaDcCompressBound API with Dynamic Deflate compression operations
+under concurrent execution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.2.11
+QATE20-9764[DC]-XXHash32ChecksumisnotcorrectonOverflowwhenFlush
+Final is set . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.2.12 QATE20-9078 [CY] Concurrent sym;asym services not supported by Perfor-
+mance Sample Code (cpa_sample_code)
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+2.2.13 QATE20-10480 [DC] - LZ4 compression request may result in a timeout event (-16
+CPA_DC_WDOG_TIMER_ERR) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+2.2.14 QAT20-10606 [Configuration] - Device configurations files are not copied to /etc/
+for physical devices on systems with > 2 sockets
+. . . . . . . . . . . . . . . . . . . . . . 20
+2.2.15 QAT20-12942 [DC] - Overflow can occur when using output buffer sizes defined
+by the cpaDcCompressBound API with Dynamic Deflate compression operations
+under concurrent execution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+2.2.16 QAT20-11092[SRIOV]DefaultnumberofVFdevicesisnotavailablefor4S+platform 21
+2.2.17 QATE20-9754 [DC] - Deflate Decompression Overflow may result in a timeout
+event (-16 CPA_DC_WDOG_TIMER_ERR) . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.2.18 QAT20-23616 [Firmware] Shared Virtual Memory (SVM) and Address Translation
+(AT) disabled . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+3
+Revision History
+23
+1 Description of Release
+This document contains information on the accompanying Intel® QuickAssist Technology (Intel® QAT)
+Hardware Version 2.0 Driver for Linux*.
+For instructions on loading and running the release software, refer to the Getting Started Guide listed in
+the Related Documentation section.
+Refer to the Revision History to check the changes of this document.
+Note: Thesereleasenotesmayincludeknownissueswiththird-partyorreferenceplatformcomponents
+that affect the operation of the software.
+1.1 Features
+• Sym/Asym Crypto.
+• TLS1.3 elliptical curves Montgomery encryption (curve 25519 and curve 448).
+• Data Compression with CnV for Deflate and LZ4/LZ4s algorithms and CnVnR for Deflate and
+LZ4s.
+• Telemetry.
+• Power Management.
+• SM3/SM4.
+• Scalable IOV (sIOV).
+• Asynchronous E2E support for compression.
+• Extended RAS (uncorrectable and fatal error support).
+• LZ4 E2E CRC32.
+• Thread Specific USDM support.
+1
+Release Notes - Linux*
+1.2 Limitations
+• Symmetric Crypto Sample applications do not run out of box without configuration file update. Re-
+fer to the Getting Started Guide for additional information.
+• Stateful decompression is not supported.
+• Key Protection Technology (KPT) is not currently supported.
+• Auto-select best (ASB) is not supported with rolling XXHash32.
+• Dynamic Power Management (DPM) is not currently supported.
+• Firmware or Hardware Anti-Rollback (ARB) mechanisms are not natively supported. Customers
+must support their own implementation of firmware or software anti-rollback mechanisms. Cus-
+tomers that do not implement ARB solutions accept all security risks of doing so.
+• When using Shared Virtual Memory (SVM) and Address Translation (AT) performance can be af-
+fected by number of page faults that occur during processing.
+1.3 Supported Operating Systems and Platforms
+The software in this release has been validated with the following configurations.
+OS
+Kernel Version
+Platform
+RedHat 9.2
+5.14.0-284.11.1.el9_2.x86_64
+Archer City E4->E5
+1.3.1 Version Numbering Scheme
+The version numbering scheme is name.os.major.minor.maintenance-build, where:
+• name is “QAT20”.
+• os is the Operating System: “L” for Linux*.
+• major is the major version of the software.
+• minor is the minor version of the software.
+• maintenance-build is the maintenance release and build number.
+2
+Description of Release
+Release Notes - Linux*
+1.3.2 Package Version
+The following table shows the OS-specific package versions for each platform supported in this release.
+Chipset or SoC
+Package Version
+Top-Level Package
+QAT20.L.1.1.40-00018
+1.3.3 Licensing for Linux* Acceleration Software
+The acceleration software is provided under the licenses listed in the following table. When using or re-
+distributing dual-licensed components, you may do so under either license.
+Component
+License
+Directories
+User Space only compo-
+nents
+Berkeley Software Distribu-
+tion (BSD)
+./quickassist/lookaside/
+access_layer/src/qat_direct
+./quickassist/lookaside/
+access_layer/src/common/crypto/
+asym
+./quickassist/utilities/osal/
+src/linux/user_space
+Common User Space and
+Kernel Space Library
+Berkeley Software Distribu-
+tion (BSD)
+./quickassist/build_system
+./quickassist/include
+./quickassist/lookaside
+./quickassist/utilities/osal (ex-
+cept items in openssl)
+adf_ctl
+Dual
+BSD/GNU
+General
+Public License (GPL) v2
+./quickassist/utilities/adf_ctl
+Kernel space driver
+GPL v2
+./quickassist/qat/drivers
+Compatibility layer for older
+kernel versions
+GPL
+./quickassist/qat/compat
+User Space DMAble Mem-
+ory Driver
+Dual BSD/GPL v2
+./quickassist/utilities/
+libusdm_drv
+Libcrypto*
+OpenSSL
+./quickassist/utilities/osal/
+src/linux/user_space/openssl
+QAT Firmware
+Redistribution
+./quickassist/qat/fw
+Calgary corpus and Canter-
+bury corpus test files
+Public Domain
+./quickassist/lookaside/
+access_layer/src/sample_code/
+performance/compression
+Description of Release
+3
+Release Notes - Linux*
+1.3.4 SHA256 Checksum Information
+The following table provides SHA256 checksum information.
+Package
+SHA256 Checksum
+QAT20.L.1.1.40-00018
+941cd7aed2081b36e84d157510b7c31a5121e9df7a676ecfbc92be71-
+ae395884
+1.4 List of Files in Release
+The Bill of Materials (BOM), sometimes referred to as the BOM, is included as a text file in the released
+software package. This text file is labeled a filelist and is located at the top directory level for each
+release.
+1.5 Intel QAT API Updates
+The Intel QAT Application Program Interface (API) version number is different from the software pack-
+age version number.
+For details on any changes to the Intel QAT APIs, refer to the Revision History pages in the following API
+reference manuals:
+• Intel QuickAssist Technology Cryptographic API Reference Manual
+• Intel QuickAssist Technology Data Compression API Reference Manual
+1.6 Technical Support
+Intel offers support for this software at the API level only, defined in the Programmer’s Guide and API
+reference manuals listed in the Related Documentation section.
+For technical support, including answers to questions not addressed in this document, visit the technical
+support forum, FAQs, and other support information at Intel Support.
+4
+Description of Release
+Release Notes - Linux*
+1.7 Environmental Assumptions
+The following assumptions are made about the deployment environment:
+• Thedriverobject/executablefileondiskshouldbeprotectedusingthenormalfileprotectionmech-
+anisms, so it is writable by only trusted users, for example, a privileged user or an administrator.
+• The public key firmware image on the disk should be protected using normal file protection mech-
+anisms, so it is writable only by trusted users, for example, a privileged user or an administrator.
+• The Intel QAT device should not be exposed (through the user space direct deployment model) to
+untrusted users.
+• TheDynamicRandom-AccessMemory(DRAM)isconsideredtobeinsidethetrustboundary. The
+traditional memory-protection schemes provided by the Intel architecture processor and memory
+controller, and by the OS, is to prevent unauthorized access to these memory regions.
+• Persistent keys were not considered, but the storage media are also considered inside the crypto-
+graphic boundary.
+• The driver exposed device file should be protected using the normal file protection mechanisms so
+that it could be opened and read/written only by trusted users.
+1.8 Related Documentation
+Title
+Number
+Intel QuickAssist Technology for Linux* - Getting Started Guide (HW 2.0)
+632506
+Intel QuickAssist Technology for Linux* - Release Notes (HW 2.0)
+632507
+Intel QuickAssist Technology for VMware* - Release Notes (HW 2.0)
+766469
+Intel QuickAssist Technology - Programmer’s Guide (HW 2.0)
+743912
+Intel QuickAssist Technology API Programmer’s Guide
+330684
+Intel QuickAssist Technology Cryptographic API Reference Manual
+330685
+Intel QuickAssist Technology Data Compression API Reference Manual
+330686
+Description of Release
+5
+2 Release Updates
+2.1 Known Issues
+2.1.1 QATE20-8981 [Sample Code] sym_dp_update_sample Func-
+tional Sample Code application execution will fail
+Title
+[Sample Code] sym_dp_update_sample Functional Sample Code application
+execution will fail
+Reference
+QATE20-8981
+Description
+CPM2.0hardwaredoesnotsupportthewirelessKasumiF8algorithmandtheas-
+sociated sample code application will fail.
+Implication
+The sym_dp_update_sample functional applications will fail with the following
+output:
+main(): Starting Sym Dp Update Sample Code App …
+symDpUpdateSample(): cpaCyStartInstance
+initSession(): cpaCySymDpSessionCtxGetSize
+initSession(): cpaCySymDpInitSession
+[error] LacSymSession_ParamCheck() - : Invalid API Param - cipherAlgorithm
+Resolution
+ThiswillnotberesolvedastheCPM2.0hardwaredoesnotsupportthisalgorithm.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Symmetric
+6
+Release Notes - Linux*
+2.1.2 QATE20-9131 [DC] - Incorrect XXHASH32 can be generated
+whenusingerrorinjectionandbuﬀeroverﬂowoccurswhenus-
+ing accumulated XXHASH32
+Title
+[DC] - Incorrect XXHASH32 can be generated when using error injection and
+buffer overflow occurs when using accumulated XXHASH32
+Reference
+QATE20-9131
+Description
+When using Data Compression service with LZ4 accumulated XXHASH32 ses-
+sions in conjunction with Error Injection the service will not trigger Recovery
+mode but shall return a CPA_DC_VERIFY_ERROR error instead.
+Implication
+Recovery mode will not trigger for LZ4 with Error Injection and instead return a
+Verify error: -18 CPA_DC_VERIFY_ERROR.
+Resolution
+Future Fix
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+2.1.3 QATE20-9671 [DC] - Accumulated XXHash32 is not sup-
+ported for LZ4 decompress operations
+Title
+[DC]-AccumulatedXXHash32isnotsupportedforLZ4decompressoperations
+Reference
+QATE20-9671
+Description
+Accumulated XXHash32 enables the calculation of a final XXHash32 that is ac-
+cumulatedacrossallpreviousrequestsinastream. Thisfeatureisavailableforthe
+Compress direction only. The decompression flow is not finalized and not cur-
+rently functional.
+Implication
+Accumulated XXHash32 is functional for the Compression direction only.
+Resolution
+Future Fix
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+Release Updates
+7
+Release Notes - Linux*
+2.1.4 QATE20-19310 [DC] Additional conﬁguration required to en-
+able 8K data decompression performance
+Title
+[DC] - Additional configuration required to enable 8K data decompression per-
+formance
+Reference
+QATE20-19310
+Description
+To utilize compression HW slices to full potential while symmetric service en-
+abled a modified policy needs to be applied for this mode of operation.
+Implication
+Decompressionperformanceisnotfullyrealizedandlimitedto~83%for8Kcom-
+pressed payloads.
+Resolution
+This
+issue
+can
+be
+resolved
+by
+modifying
+./quickassist/
+qat/drivers/crypto/qat/qat_4xxx/adf_4xxx_hw_data.c:50
+and
+changing
+dc_me_active_thd_mask = 0x03; to dc_me_active_thd_mask = 0x01; and
+then recompile. This modification is for the singular use case where decompres-
+sion performance at 8K is payloads is required. This will be addressed in a future
+release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+2.1.5 QAT20-21905 SVM/AT cannot be enabled when PRS is dis-
+abled
+Title
+SVM/AT cannot be enabled when PRS is disabled.
+Reference
+QATE20-21905
+Description
+Shared Virtual Memory(SVM) with Address translation (AT) requires Page Re-
+quest Support (PRS) to be enabled in BIOS. PRS is disabled by default.
+Implication
+The following error signatures maybe observed if application attempts to use
+SVM with AT when PRS is disabled:
+Following error code is returned an calls to the QAT APIs:
+Unable to get the physical address of the client buffer
+FollowingmessagedisplayedindmesgwhenrunningapplicationsusingtheQAT
+APIs:
+DMAR: [DMA Read] Request device [75:00.1] PASID ffffffff fault addr
+7fb0c81c0000 [fault reason 113] SM: Present bit in first-level paging entry
+is clear
+Some Telemetry data is not updated in this configuration.
+Resolution
+PRS should be enabled. For this release, user can enable PRS in BIOS by updat-
+ing the following setting to Enabled:
+Socket Configuration->IIO Configuration->Intel VT for Directed I/O (VT-d)-
+>Opt-Out Illegal MSI Mitigation
+This will be addressed in a future release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - General
+8
+Release Updates
+Release Notes - Linux*
+2.1.6 QATE20-21751[VIRT]-MissingVFsonhostwhenattachingto
+VMs
+Title
+[VIRT] - Missing VFs on host when attaching to VMs
+Reference
+QATE20-21751
+Description
+When listing VFs on the host with any amount of VFs attached to a virtual ma-
+chine, you may see missing VFs reported on the host.
+Implication
+For every virtual machine with an attached VF you may observe two less VFs re-
+ported on the host.
+Resolution
+When assigning a VF to a virtual machine always start with the ones with the high-
+est BDF and work back. This workaround ensures no missing VFs on the host.
+This will be addressed in a future release.
+Affected OS
+Linux
+Driver/Module
+4xxx Kernel module
+2.1.7 QATE20-22999 [Sample Code] Functional sample applica-
+tions will fail if service is not enabled on ﬁrst QAT Endpoint
+Title
+[Sample Code] Functional sample applications will fail if service is not enabled on
+first QAT Endpoint
+Reference
+QATE20-22999
+Description
+When sample application is executed which requests service that is not enabled
+on the first endpoint, the application will fail.
+Implication
+If first endpoint is configured with asym, running application that uses symmet-
+ric such as ccm_sample will fail with following error signatures even if other end-
+points enable symmetric crypto.
+# ./ccm_sample
+main(): Starting CCM Sample Code App …
+algChainSample(): cpaCyStartInstance
+algChainSample(): Generation-Encryption Process
+algChainSample(): cpaCySymSessionCtxGetSize CCM encrypt
+[error] cpaCySymSessionCtxGetSize() - : The instance handle is the wrong type
+algChainSample(): cpaCyStopInstance
+algChainSample(): Sample code failed with status of -1
+Resolution
+Workaround is to enable necessary service on the first endpoint.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Symmetric
+Release Updates
+9
+Release Notes - Linux*
+2.1.8 QAT20-18924 [MCC] MCC SKUs may consume more power
+than expected
+Title
+[MCC] MCC SKUs may consume more power than expected
+Reference
+QAT20-18924
+Description
+Due to Power Management changes in MCC platforms one QAT device in ev-
+ery socket is permanently clock gated when not processing requests which leads
+to inevitable heartbeat failures and device resets. Current FW workaround in-
+creases power consumption by keeping QAT in active state. Intel is working on
+workaround that does not have impact on power consumption.
+Implication
+Higher power consumption is possible
+Resolution
+This is no workaround currently available.
+Affected OS
+Linux
+Driver/Module
+QAT Firmware
+2.1.9 QAT20-20272 [XCC/MCC] Spurious heartbeat failures may
+be observed on some SKUs
+Title
+[XCC/MCC] Spurious heartbeat failures may be observed on some SKUs
+Reference
+QAT20-20272
+Description
+Time tracking in FW is inaccurate due to power management causing that fre-
+quency of HW counter that is used as reference for time measurements appears
+lower than expected. This may lead to delayed heartbeat and telemetry updates
+when devices become idle. Intel is working on workaround that removes depen-
+dency on the HW counter.
+Implication
+No functional impact, these messages can be ignored.
+Resolution
+This is no workaround currently available.
+Affected OS
+Linux
+Driver/Module
+QAT Firmware
+10
+Release Updates
+Release Notes - Linux*
+2.1.10 QAT20-24970 [Firmware] Potential false positive heartbeat
+failures
+Title
+[Firmware] Potential false positive heartbeat failures
+Reference
+QAT20-24970
+Description
+When a QAT device is fully utilized and is processing requests with large payloads
+(e.g. >512MB), false positive heartbeat failures may be reported if the heartbeat
+check interval is set too low.
+Implication
+Processing multiple requests with big payload sizes may cause false positive
+heartbeat failure and trigger PF restart.
+Resolution
+This issue can be resolved by ensuring that heartbeat interval is large enough to
+allow big payload request be correctly processed.
+Recommendedminimalheartbeatintervalvaluetobeusedis1500ms. Thisissue
+will be addressed in future release.
+Affected OS
+All
+Driver/Module
+QAT Firmware
+2.1.11 QAT20-23946 [SVM/IOMMU] Request issue doesn’t appear
+in response
+Title
+[SVM/IOMMU] Request issue doesn’t appear in response
+Reference
+QAT20-23946
+Description
+Without Address Translation (AT) enabled, QAT hardware can’t reliably handle
+page faults on write operations to invalid memory addresses.
+This may lead to situations where the operation does not complete properly and
+error is not reported to user. Only IOMMU pagefault is reported to the user in this
+case.
+This does not result in system memory corruption.
+Implication
+User is responsible for making sure that all destination addresses submitted to
+HW are valid. Also verify that SW doesn’t generate IOMMU pagefaults.
+Resolution
+Enable AT for SVM/IOMMU use cases.
+Affected OS
+All
+Driver/Module
+QAT Firmware
+Release Updates
+11
+Release Notes - Linux*
+2.1.12 QAT20-28723 [SVM/IOMMU] Incorrect reporting slice time-
+out due to page request latency
+Title
+[SVM/IOMMU] Incorrect reporting slice timeout due to page request latency
+Reference
+QAT20-28723
+Description
+When using Shared Virtual Memory and Address Translation and system is over-
+loaded or is running out of free memory it may take longer time to process Page
+Requests.
+As side effect DRAM transaction originating from QAT that will require Page Re-
+quest also will take longer to complete.
+In this case it may happen that slice watchdog will timeout, due to firmware wait-
+ing for new data to be read and then passed to the slice.
+Implication
+Request processing interrupted due to slice watchdog timeout.
+Resolution
+There is no workaround available.
+Affected OS
+Linux
+Driver/Module
+QAT Firmware
+2.1.13 QAT20-30635 [VIRT] PF/VF communication fails after at-
+taching VF to guest and rebooting guest OS; performance
+may also suﬀer
+Title
+[VIRT] PF/VF communication fails after attaching VF to guest and rebooting
+guest OS; performance may also suffer
+Reference
+QAT20-30635
+Description
+PF/VF communication may fail after attaching a VF to a guest VM and rebooting
+the guest OS. This issue is observed on RHEL 9.2 and not on older versions. The
+cause is related to a significant latency in interrupt handling on the KVM/QEMU
+side for the specific kernel version.
+Kernel error messages may include the following:
+4xxxvf 0000:04:00.0: IOV response message timeout 4xxxvf 0000:04:00.0:
+CRCerroronmsgtype2. Local25,remote624xxxvf0000:04:00.0: QAT:Failed
+adf_iov_block_get When using Shared Virtual Memory and Address Translation
+Implication
+The issue may cause the guest VM to hang or become unreachable during the
+QATdriverinstallationontheguest. Theperformanceofepollmodeontheguest
+is dramatically reduced.
+Resolution
+This issue cannot be resolved within the driver. A workaround is to increase the
+interrupt waiting and polling times, but this may lead to longer VF startup times.
+It is advised to use an alternative kernel version for optimal performance.
+Affected OS
+Linux
+Driver/Module
+N/A
+12
+Release Updates
+Release Notes - Linux*
+2.2 Resolved Issues
+2.2.1 QATE20-3331 [Sample Code] Functional Sample Code Com-
+pression applications execution will fail
+Title
+[Sample Code] Functional Sample Code Compression applications execution
+will fail
+Reference
+QATE20-3331
+Description
+Due to internal implementation details of QAT2.0 Data Compression, there are
+additional constraints on the expected output buffer sizes for compression oper-
+ation.
+Thecurrentoutputbuffersizesarenotsufficientlylargeenoughtoaccommodate
+the compression operations involved. This will be addressed in later software re-
+leases where an API will be made available to determine at runtime the correct
+output buffer size to be allocated.
+Implication
+These functional applications will fail with the following output:
+./dc_dp_sample: [error] dcCompression_ProcessCallback() - : Unrecoverable
+error: stateless overflow. You may need to increase the size of your destination
+buffer
+./dc_stateless_multi_op_sample: [error] dcCheckDestinationData() - : Invalid
+API Param - Destination buffer size should be greater or equal to 512 bytes
+./dc_stateless_sample: compPerformOp(): Results status not as expected (sta-
+tus = -11)
+Resolution
+This is resolved with the 0.5.5 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Compression
+Release Updates
+13
+Release Notes - Linux*
+2.2.2 QATE20-9755 [SRIOV] RLT_ERRLOG may be reported un-
+der high concurrent loads
+Title
+[SRIOV] RLT_ERRLOG may be reported under high concurrent loads
+Reference
+QATE20-9755
+Description
+The following error may be reported when running high concurrency loads on Vir-
+tual Machines:
+4xxx
+0000:6b:00.0:
+AT_GLOBA
+L0_PAR_STS[0],
+00000000,
+AT_GLOBAL1_PAR_STS[0],
+00000000, AT_PAR_STS[0], 00000000
+…
+4xxx
+0000:6b:00.0:
+RLT_ERRLOG[0],00000001,
+UERRSSMSHAD[0],00000000,xxxvf 0000:6b:00.7:
+Fatal error received
+from PF 0x1
+This relates a counter flow and does not have a functional impact to the operation
+of SR-IOV Virtual Functions.
+Implication
+Additional debug prints in dmesg may be observed.
+Resolution
+This is resolved with the 0.5.5 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Virtualization
+2.2.3 QATE20-9669 [DC] - Deﬂate Dynamic Decompression not
+optimized for payloads of source length < 4K, destination
+length <= 16K
+Title
+[DC] - Deflate Dynamic Decompression not optimized for payloads of source
+length < 4K, destination length <= 16K
+Reference
+QATE20-9669
+Description
+Current data path operations are not optimized for all traffic profiles.
+Implication
+Expected performance profile for this release does not meet expectations. This
+can be observedwith performance samplecodewhenusing8K payloadsthatare
+compressed in HW and where throughput metrics are then reported for the de-
+compress direction.
+Resolution
+This is resolved with the 0.5.5 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+14
+Release Updates
+Release Notes - Linux*
+2.2.4 QATE20-9394 [SRIOV] Virtual Functions (VFs) are not auto-
+maticallydetachedbyhypervisorafterPhysicalFunction(PF)
+restart
+Title
+[SRIOV] Virtual Functions (VFs) are not automatically detached by hypervisor
+after Physical Function (PF) restart
+Reference
+QATE20-9394
+Description
+ThefollowingerrormaybeencounteredwhenattemptingtodetachSR-IOVVFs:
+error: Failed to detach device pci_0000_6b_00_1
+error: Requested operation is not valid: PCI device 0000:6b:00.1 is in use by
+driver QEMU, domain <name>
+Implication
+VFs are not automatically detached by hypervisor after PF restart, requiring a VM
+shutdown.
+Resolution
+This is resolved with the 0.5.5 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Virtualization
+2.2.5 QATE20-3860 [SR-IOV] Virtual Functions (VFs) require
+restart after changing Physical Function (PF) Service conﬁg-
+uration
+Title
+[SR-IOV] Virtual Functions(VFs) require restart after changing Physical Func-
+tion(PF) Service configuration
+Reference
+QATE20-3860
+Description
+Each QAT PF is configurated with at most 2 services (Symmetric Crypto, PKE,
+Data Compression), this is shared with all VFs on the same PCIe endpoint
+whereby default each PF is configurated to use Symmetric + Data Compression
+services.
+If a change in enabled services is required then the normal operating procedure is
+to reconfigure PF and re-create the VFs.
+Implication
+Following PF and associated VF reconfiguration ./adf_ctl status may report all
+VFs being operational, however applications can report:
+ADF_UIO_PROXY
+err:
+icp_adf_userProcessToStart:
+Error
+reading
+/dev/qat_dev_processes file.
+Resolution
+This is resolved with the 0.5.5 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - SRIOV - PF/VF comms
+Release Updates
+15
+Release Notes - Linux*
+2.2.6 QATE20-10981 [DC] EOLB incorrectly set during stateful de-
+compression
+Title
+[DC] EOLB incorrectly set during stateful decompression
+Reference
+QATE20-10981
+Description
+The application that performs the decompression may stop decompressing the
+remaining deflate blocks if it is testing the endOfLastBlock field in CpaDcRqRe-
+sults structure.
+Implication
+The application that performs the decompression may stop decompressing the
+remaining deflate blocks if it is testing the endOfLastBlock field in CpaDcRqRe-
+sults structure.
+Resolution
+This is resolved with the 0.8.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT FW - Compression
+2.2.7 QAT20-10966 DC - Invalid checksum value returned with
+multi-Gzip payload
+Title
+DC - Invalid checksum value returned with multi-Gzip payload
+Reference
+QAT20-10966
+Description
+Theissuehappenswithstatelessdecompressionwhensubmittingapayloadwith
+multiple GZip frames. During the decompression of the second GZip frame, the
+checksum returned by QAT device is incorrect. It does not match the CRC32
+checksum reported in the Gzip footer.
+Implication
+The application will fail to validate the checksum of the decompressed data
+against the checksum in the GZip footer.
+Resolution
+This is resolved with the 0.8.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Compression
+16
+Release Updates
+Release Notes - Linux*
+2.2.8 QATE20-9756 [DC] - autoSelectBestHuﬀmanTree ﬂag pa-
+rameter is not honored by acceleration library
+Title
+[DC] - autoSelectBestHuffmanTree flag parameter is not honored by accelera-
+tion library
+Reference
+QATE20-9756
+Description
+The autoSelectBestHuffmanTree parameter in CpaDcSessionSetupData is
+treated as FALSE by acceleration library.
+Implication
+ApplicationscannotcurrentlysetautoSelectBestHuffmanTree. Thiscouldresult
+in lower compressibility.
+Resolution
+This is resolved with the 0.8.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+2.2.9 QATE20-11081 [DC] - API cpaDcResetSession() does not re-
+set E2E internal structure
+Title
+[DC] - API cpaDcResetSession() does not reset E2E internal structure
+Reference
+QATE20-11081
+Description
+Theissuehappenswithstatelessdecompressionwhensubmittingapayloadwith
+multiple GZip frames. If the application calls cpaDcResetSession() API after the
+first Gzip frame has been processed. It will not reset the various checksums de-
+fined in dc_integrity_crc_fw_t.
+Implication
+Application will see unexpected checksums after calling cpaDcResetSession()
+API.
+Resolution
+This is resolved with the 0.8.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+Release Updates
+17
+Release Notes - Linux*
+2.2.10 QATE20-9501 [DC] - Overﬂow can occur when using output
+buﬀer sizes deﬁned by the cpaDcCompressBound API with
+Dynamic Deﬂate compression operations under concurrent
+execution
+Title
+[DC] - Overflow can occur when using output buffer sizes defined by the cpaDc-
+CompressBound API with Dynamic Deflate compression operations under con-
+current execution
+Reference
+QATE20-9501
+Description
+Theinternalcalculationforoptimaloutputbuffersizeforagiveninputandsession
+configurationwhenusingthecpaDcCompressBoundAPIcanyieldoverflowcon-
+ditions. This has been observed under concurrent SW thread execution in partic-
+ular with LZ4s and Dynamic Deflate requests being concurrently processed.
+Implication
+An application using the cpaDcCompressBound API may require overflow han-
+dling until the refinement of the algorithm completes.
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+2.2.11 QATE20-9764 [DC] - XXHash32 Checksum is not correct on
+Overﬂow when Flush Final is set
+Title
+[DC] - XXHash32 Checksum is not correct on Overflow when Flush Final is set
+Reference
+QATE20-9764
+Description
+When the Accumulated XXHash is used,
+for the last request if the
+CPA_DC_OVERFLOW (-11) occurs, this ceases checksum accumulation.
+Implication
+The user application will observe a CPA_DC_OVERFLOW (-11).
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+18
+Release Updates
+Release Notes - Linux*
+2.2.12 QATE20-9078 [CY] Concurrent sym;asym services not sup-
+ported by Performance Sample Code (cpa_sample_code)
+Title
+[CY] Concurrent sym;asym services not supported by Performance Sample
+Code (cpa_sample_code)
+Reference
+QATE20-9078
+Description
+If symmetric and asymmetric crypto is enabled in QAT configuration
+files, the driver will report error when running performance sample code
+(cpa_sample_code).
+Implication
+It is not possible to currently test symmetric crypto and asymmetric crypto with
+performance sample code (cpa_sample_code) on one test run.
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+2.2.13 QATE20-10480 [DC] - LZ4 compression request may result
+in a timeout event (-16 CPA_DC_WDOG_TIMER_ERR)
+Title
+[DC] - LZ4 compression request may result in a timeout event (-16
+CPA_DC_WDOG_TIMER_ERR)
+Reference
+QATE20-10480
+Description
+When executing LZ4 compression requests, a watchdog timer timeout error (er-
+ror code -16) may be returned to the application.
+Implication
+No data will be produced by QAT HW and error code -16 will be reported to the
+application.
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT FW - Data Compression
+Release Updates
+19
+Release Notes - Linux*
+2.2.14 QAT20-10606 [Conﬁguration] - Device conﬁgurations ﬁles
+are not copied to /etc/ for physical devices on systems with
+> 2 sockets
+Title
+[Configuration] - Device configurations files are not copied to /etc/ for physical
+devices on systems with > 2 sockets
+Reference
+QAT20-10606
+Description
+The installation scripts will not create configuration files in /etc/
+Implication
+Devices on sockets >2 will not be brought up and will be reported as being in the
+“down” state.
+The following status will be observed: qat_dev0 - type: 4xxx, inst_id: 0, node_id:
+0, bsf: 0000:6b:00.0, #accel: 1 #engines: 9 state: up … qat_dev7 - type: 4xxx,
+inst_id: 7, node_id: 1, bsf: 0000:f8:00.0, #accel: 1 #engines: 9 state: up qat_dev8
+- type: 4xxx, inst_id: 8, node_id: 2, bsf: 0001:6b:00.0, #accel: 1 #engines: 9 state:
+down qat_dev9 - type: 4xxx, inst_id: 9, node_id: 2, bsf: 0001:70:00.0, #accel:
+1 #engines: 9 state: down … qat_dev15 - type: 4xxx, inst_id: 15, node_id: 3, bsf:
+0001:f8:00.0, #accel: 1 #engines: 9 state: down
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Configuration
+2.2.15 QAT20-12942 [DC] - Overﬂow can occur when using output
+buﬀer sizes deﬁned by the cpaDcCompressBound API with
+Dynamic Deﬂate compression operations under concurrent
+execution
+Title
+[DC] - Overflow can occur when using output buffer sizes defined by the cpaDc-
+CompressBound API with Dynamic Deflate compression operations under con-
+current execution
+Reference
+QAT20-12942
+Description
+Theinternalcalculationforoptimaloutputbuffersizeforagiveninputandsession
+configurationwhenusingthecpaDcCompressBoundAPIcanyieldoverflowcon-
+ditions. This has been observed under concurrent SW thread execution in partic-
+ular with LZ4s and Dynamic Deflate requests being concurrently processed.
+Implication
+An application using the cpaDcCompressBound API may require overflow han-
+dling until the refinement of the algorithm completes.
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+20
+Release Updates
+Release Notes - Linux*
+2.2.16 QAT20-11092 [SRIOV] Default number of VF devices is not
+available for 4S+ platform
+Title
+[SRIOV] Default number of VF devices is not available for 4S+ platform
+Reference
+QAT20-11092
+Description
+When installing VFs in default configuration on 4S+ platform, some of the VFs
+are not usable.
+e.g. Sample application execution fails with error message:
+[error] SalCtrl_AdfServicesStartedCheck() - : Sal Ctrl failed to start in given time
+[error] do_userStart() - : Failed to start services
+Implication
+Sample code application is not usable, some of the devices are down.
+Resolution
+This is resolved with the 0.9.0 release.
+Affected OS
+Linux
+Driver/Module
+N/A
+2.2.17 QATE20-9754 [DC] - Deﬂate Decompression Overﬂow may
+result in a timeout event (-16 CPA_DC_WDOG_TIMER_ERR)
+Title
+[DC] - Deflate Decompression Overflow may result in a timeout event (-16
+CPA_DC_WDOG_TIMER_ERR)
+Reference
+QATE20-9754
+Description
+When utilizing either stateless/stateful Deflate Decompression sessions, under
+certainconditionsanoverfloweventmaycausewatchdogtimertimeouterrorand
+the driver will report a timeout event (-16 CPA_DC_WDOG_TIMER_ERR).
+Implication
+The user application will observe a CPA_DC_WDOG_TIMER_ER (-16) error
+rather than CPA_DC_OVERFLOW (-11 ).
+Resolution
+Issue is resolved with updated silicon.
+Affected OS
+Linux
+Driver/Module
+QAT IA - Data Compression
+Release Updates
+21
+Release Notes - Linux*
+2.2.18 QAT20-23616 [Firmware] Shared Virtual Memory (SVM)
+and Address Translation (AT) disabled
+Title
+[Firmware] Shared Virtual Memory (SVM) and Address Translation (AT) dis-
+abled
+Reference
+QAT20-23616
+Description
+When running QAT workloads with AT enabled under loaded traffic conditions,
+memory page corruption may occur.
+Intel is looking at a possible workaround for the problem, and until then the QAT
+firmware/Driver will not make use of or enable SVM with AT.
+Implication
+It is not currently possible to run with SVM and AT.
+Resolution
+SVM and AT are available starting with the 1.0.10 release. Refer to the SVM Kernel
+Requirements section of the Programmer’s Guide for details on enabling.
+Affected OS
+All
+Driver/Module
+QAT Firmware
+22
+Release Updates
+3 Revision History
+Document
+Version
+Description
+Date
+016
+Updates for 1.1.40 Release
+March 2024
+015
+Updates for 1.0.50 Release
+June 2023
+014
+Updates for 1.0.40 Release
+May 2023
+013
+Updates for 1.02 Release
+January 2023
+012
+Updates for PV Release
+November 2022
+011
+Updates for PC 4S/8S Release
+November 2022
+010
+Updates for PC 2 Release
+September 2022
+009
+Updates for PC 1 Release
+August 2022
+008
+Updates for Beta 8S Release
+May 2022
+007
+Updates for Alpha 8S Release
+February 2022
+006
+Updates for Beta Release
+October 2021
+005
+Updated package and checksum details
+June 2021
+004
+Updated with known issues
+May 2021
+003
+Updates for Alpha Release
+April 2021
+002
+Updated with known issues
+February 2021
+001
+Initial Release
+October 2020
+23
